@@ -378,12 +378,11 @@ For **red-team mode** it includes: the artifact reviewed, the lens-pack chosen (
 
 This transcript is the artifact. If the user wants to run the council again on the same question after making changes, having the previous transcript lets them (or a future agent) see how the thinking evolved.
 
-### step 7: register the decision in the outcome ledger
+### step 7 (optional): register the decision in an outcome ledger
 
-Append one `pending` row to the fixed-path ledger
-`~/Projects/fleet-docs/council-ledger.jsonl` (absolute — works regardless of
-which project the council ran from) so this decision can be graded later on its
-realized outcome. This is the council's own honest metric: a council you only
+If the user wants their council decisions graded on realized outcomes (recommended
+for recurring use), append one `pending` row to `council-ledger.jsonl` in the same
+folder as the reports. This is the council's own honest metric: a council you only
 ever grade at decision time is grading its own homework. Append a JSON object:
 
 ```json
@@ -394,8 +393,9 @@ ever grade at decision time is grading its own homework. Append a JSON object:
 ```
 
 Do NOT fill `status`/`outcome` now — grading is a separate, later act by the
-human, not the model that ran the council. See `fleet-docs/council-ledger.md`
-for the metric (`python3 council_score.py`) and grading protocol.
+human, not the model that ran the council. When a `resolve_after` date has passed,
+the human revisits the row and sets `outcome` to `good-call` / `bad-call` /
+`unclear`; the ledger's hit-rate over graded rows is the council's track record.
 
 ## output format
 
